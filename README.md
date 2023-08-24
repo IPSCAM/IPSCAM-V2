@@ -1,4 +1,4 @@
-### Hi there 👋
+### Bienvenidos al desarrollo de App Movil de Escaneo de Placas 👋
 
 <!--
 **IPSCAM/IPSCAM** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
