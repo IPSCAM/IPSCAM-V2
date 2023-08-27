@@ -1,8 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
-
 
 Future<String> imageCropperView(String? path, BuildContext context) async {
   CroppedFile? croppedFile = await ImageCropper().cropImage(
@@ -31,10 +28,8 @@ Future<String> imageCropperView(String? path, BuildContext context) async {
   );
 
   if (croppedFile != null) {
-    log("Imagen recortada");
     return croppedFile.path;
   } else {
-    log("No habia archivo");
     return '';
   }
 }

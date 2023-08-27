@@ -105,21 +105,21 @@
     },
     {
       "name": "google_mlkit_commons",
-      "rootUri": "file:///C:/Users/henry/AppData/Local/Pub/Cache/hosted/pub.dev/google_mlkit_commons-0.2.0",
+      "rootUri": "file:///C:/Users/henry/AppData/Local/Pub/Cache/hosted/pub.dev/google_mlkit_commons-0.5.0",
       "packageUri": "lib/",
       "languageVersion": "2.16"
     },
     {
       "name": "google_mlkit_text_recognition",
-      "rootUri": "file:///C:/Users/henry/AppData/Local/Pub/Cache/hosted/pub.dev/google_mlkit_text_recognition-0.4.0",
+      "rootUri": "file:///C:/Users/henry/AppData/Local/Pub/Cache/hosted/pub.dev/google_mlkit_text_recognition-0.10.0",
       "packageUri": "lib/",
       "languageVersion": "2.16"
     },
     {
       "name": "http",
-      "rootUri": "file:///C:/Users/henry/AppData/Local/Pub/Cache/hosted/pub.dev/http-0.13.6",
+      "rootUri": "file:///C:/Users/henry/AppData/Local/Pub/Cache/hosted/pub.dev/http-1.1.0",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "http_parser",
@@ -129,25 +129,25 @@
     },
     {
       "name": "image_cropper",
-      "rootUri": "file:///C:/Users/henry/AppData/Local/Pub/Cache/hosted/pub.dev/image_cropper-3.0.3",
+      "rootUri": "file:///C:/Users/henry/AppData/Local/Pub/Cache/hosted/pub.dev/image_cropper-5.0.0",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.18"
     },
     {
       "name": "image_cropper_for_web",
-      "rootUri": "file:///C:/Users/henry/AppData/Local/Pub/Cache/hosted/pub.dev/image_cropper_for_web-1.0.3",
+      "rootUri": "file:///C:/Users/henry/AppData/Local/Pub/Cache/hosted/pub.dev/image_cropper_for_web-3.0.0",
       "packageUri": "lib/",
-      "languageVersion": "2.16"
+      "languageVersion": "2.18"
     },
     {
       "name": "image_cropper_platform_interface",
-      "rootUri": "file:///C:/Users/henry/AppData/Local/Pub/Cache/hosted/pub.dev/image_cropper_platform_interface-3.0.3",
+      "rootUri": "file:///C:/Users/henry/AppData/Local/Pub/Cache/hosted/pub.dev/image_cropper_platform_interface-5.0.0",
       "packageUri": "lib/",
-      "languageVersion": "2.16"
+      "languageVersion": "2.18"
     },
     {
       "name": "image_picker",
-      "rootUri": "file:///C:/Users/henry/AppData/Local/Pub/Cache/hosted/pub.dev/image_picker-0.8.9",
+      "rootUri": "file:///C:/Users/henry/AppData/Local/Pub/Cache/hosted/pub.dev/image_picker-1.0.2",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -308,7 +308,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2023-08-27T18:25:11.045698Z",
+  "generated": "2023-08-27T19:58:09.128886Z",
   "generator": "pub",
   "generatorVersion": "3.1.0"
 }

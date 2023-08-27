@@ -4,6 +4,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:ipscamv2/cod_utils/image_picker_class.dart';
 import 'package:ipscamv2/cod_utils/image_cropper_page.dart';
 
+import 'cod_utils/FormatText.dart';
+
 void main() {
   runApp(inicio());
 }
@@ -210,8 +212,9 @@ class PantallaInicio extends StatelessWidget {
     final RecognizedText recognizedText =
     await textRecognizer.processImage(image);
 
-    //texto = "${recognizedText.text}";
-    _cod_placa.text=recognizedText.text;
+    CleanText formatText = CleanText(recognizedText.text, context_p);
+    //formatText.getCleanText();
+    _cod_placa.text=formatText.getCleanText();//recognizedText.text;
 
   }
 }
