@@ -20,10 +20,11 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  var currentIndex = 0;
+  var currentIndex = 0; // Índice de la página actual
 
+  // Lista de widgets de páginas externas (inicio.dart, historial.dart, ajustes.dart)
   List<Widget> pages = [
-    inicio(), // Usa las páginas externas
+    inicio(),
     historial(),
     ajustes(),
   ];
@@ -53,7 +54,7 @@ class HomePageState extends State<HomePage> {
           itemBuilder: (context, index) => InkWell(
             onTap: () {
               setState(() {
-                currentIndex = index;
+                currentIndex = index; // Actualiza el índice de la página actual
                 HapticFeedback.lightImpact();
               });
             },
@@ -61,6 +62,7 @@ class HomePageState extends State<HomePage> {
             highlightColor: Colors.transparent,
             child: Stack(
               children: [
+                // Fondo animado de los íconos
                 AnimatedContainer(
                   duration: Duration(seconds: 1),
                   curve: Curves.fastLinearToSlowEaseIn,
@@ -81,6 +83,7 @@ class HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
+                // Contenido animado de los íconos y etiquetas
                 AnimatedContainer(
                   duration: Duration(seconds: 1),
                   curve: Curves.fastLinearToSlowEaseIn,
@@ -90,6 +93,7 @@ class HomePageState extends State<HomePage> {
                   alignment: Alignment.center,
                   child: Stack(
                     children: [
+                      // Animación del espacio previo al ícono y etiqueta
                       Row(
                         children: [
                           AnimatedContainer(
@@ -98,13 +102,14 @@ class HomePageState extends State<HomePage> {
                             width:
                                 index == currentIndex ? displayWidth * .13 : 0,
                           ),
+                          // Etiqueta animada
                           AnimatedOpacity(
                             opacity: index == currentIndex ? 1 : 0,
                             duration: Duration(seconds: 1),
                             curve: Curves.fastLinearToSlowEaseIn,
                             child: Text(
                               index == currentIndex
-                                  ? '${listOfStrings[index]}'
+                                  ? '${listOfStrings[index]}' // Muestra el nombre de la página actual
                                   : '',
                               style: TextStyle(
                                 color: Colors.blueAccent,
@@ -115,6 +120,7 @@ class HomePageState extends State<HomePage> {
                           ),
                         ],
                       ),
+                      // Ícono animado
                       Row(
                         children: [
                           AnimatedContainer(
@@ -127,8 +133,8 @@ class HomePageState extends State<HomePage> {
                             listOfIcons[index],
                             size: displayWidth * .076,
                             color: index == currentIndex
-                                ? Colors.blueAccent
-                                : Colors.black26,
+                                ? Colors.blueAccent // Color activo
+                                : Colors.black26, // Color inactivo
                           ),
                         ],
                       ),
@@ -140,7 +146,7 @@ class HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      body: pages[currentIndex],
+      body: pages[currentIndex], // Cuerpo de la página actual
     );
   }
 
