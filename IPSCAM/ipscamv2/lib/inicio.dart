@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:ipscamv2/cod_utils/image_picker_class.dart';
+import 'package:ipscamv2/cod_utils/image_cropper_page.dart';
 
 void main() {
   runApp(inicio());
@@ -19,8 +23,13 @@ class inicio extends StatelessWidget {
 }
 
 class PantallaInicio extends StatelessWidget {
+
+  final TextEditingController _cod_placa = TextEditingController(text: '');
+  late BuildContext context_p;
+
   @override
   Widget build(BuildContext context) {
+    context_p=context;
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -63,6 +72,7 @@ class PantallaInicio extends StatelessWidget {
                             border:
                                 OutlineInputBorder(), // Contorno del buscador
                           ),
+                          controller: _cod_placa,
                         ),
                       ),
                       IconButton(
@@ -82,23 +92,24 @@ class PantallaInicio extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildCard(
+            _buildCard(
                 Icons.photo_camera_back_outlined,
                 'Tome una fotografia de su vehiculo y escanee el código de la placa',
                 'Escanear Ahora',
                 () {
-                  // Tomar foto y escanear código
+                  photoScam(1);
                 },
                 iconColor: Color.fromARGB(255, 0, 26, 196), // Color del Icono
                 buttonColor:
                     Color.fromARGB(255, 0, 119, 255), // Color del Boton
               ),
+
               _buildCard(
                 Icons.image_search,
                 'Seleccione una fotografia de su galeria y escanee el código de placa.',
                 'Buscar Ahora',
                 () {
-                  // Seleccionar foto de la galería y escanear código
+                  photoScam(2);
                 },
                 iconColor: Color.fromARGB(255, 89, 159, 182), // Color del Icono
                 buttonColor:
@@ -165,5 +176,42 @@ class PantallaInicio extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void photoScam(int i) {
+    if (i == 1) {
+      pickImage(source: ImageSource.camera).then((value) {
+        if (value != '') {
+          imageCropperView(value, context_p).then((value) {
+            if (value != '') {
+              final InputImage inputImage = InputImage.fromFilePath(value);
+              processImage(inputImage);
+            }
+          });
+        }
+      });
+    } else {
+      pickImage(source: ImageSource.gallery).then((value) {
+        if (value != '') {
+          imageCropperView(value, context_p).then((value) {
+            if (value != '') {
+              final InputImage inputImage = InputImage.fromFilePath(value);
+              processImage(inputImage);
+            }
+          });
+        }
+      });
+    }
+  }
+
+  void processImage(InputImage image) async {
+    final textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
+
+    final RecognizedText recognizedText =
+    await textRecognizer.processImage(image);
+
+    //texto = "${recognizedText.text}";
+    _cod_placa.text=recognizedText.text;
+
   }
 }
