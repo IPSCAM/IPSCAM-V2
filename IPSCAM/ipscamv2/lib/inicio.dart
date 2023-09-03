@@ -1,8 +1,13 @@
+import 'package:desing_ipscamv2/ajustes.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:ipscamv2/cod_utils/image_picker_class.dart';
-import 'package:ipscamv2/cod_utils/image_cropper_page.dart';
+import 'cod_utils/InternetChecker.dart';
+import 'cod_utils/image_picker_class.dart';
+import 'cod_utils/image_cropper_page.dart';
+import 'alerts_dialogs/DialogNotConnection.dart';
+import 'alerts_dialogs/DialogGetInfomation.dart';
 
 import 'cod_utils/FormatText.dart';
 
@@ -18,6 +23,7 @@ class inicio extends StatelessWidget {
       title: 'Inicio',
       theme: ThemeData(
         primarySwatch: Colors.lightBlue,
+        //systemNavigationBarColor: Theme.of(context).primaryColor,
       ),
       home: PantallaInicio(),
     );
@@ -25,31 +31,33 @@ class inicio extends StatelessWidget {
 }
 
 class PantallaInicio extends StatelessWidget {
-
   final TextEditingController _cod_placa = TextEditingController(text: '');
-  late BuildContext context_p;
+  late final BuildContext context_p;
+  DialogNotConnection dialognoconnection = DialogNotConnection();
+  //late DialogGetInformation dialogGetInformation;//= DialogGetInformation();
 
   @override
   Widget build(BuildContext context) {
-    context_p=context;
+    context_p = context;
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
             // Contenedor superior azul con bordes redondeados en la parte inferior
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Color.fromARGB(
                   255, 1, 147, 244), // Color celeste personalizado
               borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(16),
-                bottomRight: Radius.circular(16),
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20),
               ),
             ),
-            padding: EdgeInsets.fromLTRB(16, 40, 16, 0), // Margen superior
+            padding: const EdgeInsets.fromLTRB(16, 40, 16, 0),
+            // Margen superior
             child: Column(
               children: [
-                Text(
+                const Text(
                   'Inicio', // Título
                   style: TextStyle(
                     fontSize: 28,
@@ -57,33 +65,67 @@ class PantallaInicio extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 20), // Espacio entre título y buscador
+                const SizedBox(height: 20), // Espacio entre título y buscador
                 Container(
-                  margin: EdgeInsets.fromLTRB(0, 0, 0, 20), // Espacio inferior
+                  margin: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                  // Espacio inferior
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Row(
                     children: [
                       Expanded(
                         child: TextField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
+                            contentPadding: EdgeInsets.all(8),
+
                             hintText: 'Numero de Placa',
-                            border:
-                                OutlineInputBorder(), // Contorno del buscador
+                            border: OutlineInputBorder(),
+                            // Contorno del buscador
                           ),
                           controller: _cod_placa,
                         ),
                       ),
-                      IconButton(
-                        icon: Icon(Icons.search),
-                        color: Color(0xFF3498db), // Color celeste personalizado
-                        onPressed: () {
-                          // Realizar búsqueda
-                        },
-                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color:
+                              Color(0xFF3498db), // Color celeste personalizado
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        margin: EdgeInsets.only(left: 8),
+                        padding: EdgeInsets.all(8),
+                        width: 60,
+                        height: 60,
+                        child: IconButton(
+                          onPressed: () async {
+                            if (!await InternetChecker.isInternetAvailable()) {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return dialognoconnection;
+                                },
+                              );
+                            } else {
+                              String pCode = _cod_placa.text;
+                              DialogGetInformation dialogGetInformation =
+                                  DialogGetInformation(code: pCode);
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return dialogGetInformation;
+                                },
+                              );
+                            }
+                          },
+                          icon: Icon(
+                            Icons.search,
+                            color: Colors.white,
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -94,7 +136,7 @@ class PantallaInicio extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-            _buildCard(
+              _buildCard(
                 Icons.photo_camera_back_outlined,
                 'Tome una fotografia de su vehiculo y escanee el código de la placa',
                 'Escanear Ahora',
@@ -105,7 +147,6 @@ class PantallaInicio extends StatelessWidget {
                 buttonColor:
                     Color.fromARGB(255, 0, 119, 255), // Color del Boton
               ),
-
               _buildCard(
                 Icons.image_search,
                 'Seleccione una fotografia de su galeria y escanee el código de placa.',
@@ -210,11 +251,9 @@ class PantallaInicio extends StatelessWidget {
     final textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
 
     final RecognizedText recognizedText =
-    await textRecognizer.processImage(image);
+        await textRecognizer.processImage(image);
 
     CleanText formatText = CleanText(recognizedText.text, context_p);
-    //formatText.getCleanText();
-    _cod_placa.text=formatText.getCleanText();//recognizedText.text;
-
+    _cod_placa.text = formatText.getCleanText();
   }
 }
